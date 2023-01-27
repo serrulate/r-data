@@ -88,8 +88,8 @@ ggp2
 library(tidyverse)
 
 my_ggtheme = theme_bw() +
-  theme(axis.title = element_text(size = 20),
-        axis.text = element_text(size = 16),
+  theme(axis.title = element_text(size = 8),
+        axis.text = element_text(size = 8),
         legend.text = element_text(size = 16),
         legend.title = element_text(size = 18),
         plot.title = element_text(size = 25),
@@ -119,3 +119,34 @@ CMP_subset_long = CMP_subset_long %>%
                           "0",
                           " "))
 view(CMP_subset_long)
+
+
+boxplots = ggplot(CMP_subset_long,
+                  aes(x = variable,
+                      y = value)) +
+                  geom_boxplot()+
+                  my_ggtheme
+boxplots
+
+
+CMP_subset_long = CMP_subset_long %>%
+  group_by(variable)%>%
+  mutate(normvalue= 
+           value/max(value, na.rm = TRUE))
+  
+
+boxplots = ggplot(CMP_subset_long,
+                  aes(x = variable,
+                      y = normvalue)) +
+  geom_boxplot()+
+  my_ggtheme
+boxplots
+
+
+boxplots = ggplot(CMP_subset_long,
+                  aes(x = variable,
+                      y = normvalue,
+                      fill= variable)) +
+  geom_boxplot()+
+  my_ggtheme
+boxplots
