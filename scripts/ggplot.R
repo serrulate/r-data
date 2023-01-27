@@ -84,5 +84,38 @@ ggp2= ggp2 + theme_bw()+
           plot.subtitle = element_text(size =18))
 ggp2          
         
-      )
+  
+library(tidyverse)
 
+my_ggtheme = theme_bw() +
+  theme(axis.title = element_text(size = 20),
+        axis.text = element_text(size = 16),
+        legend.text = element_text(size = 16),
+        legend.title = element_text(size = 18),
+        plot.title = element_text(size = 25),
+        plot.subtitle = element_text(size = 18))
+Intro
+
+
+view(CMP_subset)
+CMP_subset_long = CMP_subset %>%
+  gather(key = "variable",
+         value = "value")
+view(CMP_subset_long)
+
+
+
+CMP_subset_long = CMP_subset_long %>%
+    mutate(variable =
+             str_replace(variable,
+                          "Manufacturing",
+                          "Man. "))%>%
+    mutate(variable =
+              str_replace(variable,
+                          "Biological",
+                          "Bio "))%>%
+    mutate(variable =
+              str_replace(variable, 
+                          "0",
+                          " "))
+view(CMP_subset_long)
